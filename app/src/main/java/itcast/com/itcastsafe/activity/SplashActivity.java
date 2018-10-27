@@ -19,6 +19,9 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.lidroid.xutils.HttpUtils;
@@ -113,8 +116,11 @@ public class SplashActivity extends Activity {
             }
         }
 
-
-
+        RelativeLayout rl_Root = findViewById(R.id.rl_Root);
+        //渐变的动画效果
+        AlphaAnimation animation = new AlphaAnimation(0.1f,1f);
+        animation.setDuration(2000);
+        rl_Root.startAnimation(animation);
 
 
     }
