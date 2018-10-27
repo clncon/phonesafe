@@ -18,9 +18,13 @@ import itcast.com.itcastsafe.activity.SettingActivity;
  */
 @TargetApi(21)
 public class SettingItemView extends RelativeLayout{
+    private final static String NAMESPACE="http://schemas.android.com/apk/res-auto";
     private  TextView tv_title;
     private  TextView tv_desc;
     private CheckBox checkBox;
+    private String title;
+    private String desc_Off;
+    private String desc_On;
     public SettingItemView(Context context) {
         super(context);
         initView();
@@ -28,6 +32,11 @@ public class SettingItemView extends RelativeLayout{
 
     public SettingItemView(Context context, AttributeSet attrs) {
         super(context, attrs);
+
+       title = attrs.getAttributeValue(NAMESPACE, "title");
+         desc_Off = attrs.getAttributeValue(NAMESPACE, "desc_Off");
+        desc_On = attrs.getAttributeValue(NAMESPACE, "desc_On");
+        //System.out.println("title:"+title);
         initView();
     }
 
@@ -51,6 +60,9 @@ public class SettingItemView extends RelativeLayout{
         checkBox  = setting_item.findViewById(R.id.cb_status);
         tv_title = setting_item.findViewById(R.id.tv_title);
         tv_desc = setting_item.findViewById(R.id.tv_desc);
+        setTv_title(title);
+
+
     }
 
     public void setTv_title(String title){
@@ -67,5 +79,13 @@ public class SettingItemView extends RelativeLayout{
 
     public void setIsChecked(boolean flag) {
         this.checkBox.setChecked(flag);
+        //设置状态文本描述
+        if(flag){
+            setTv_desc(desc_On);
+        }else{
+            setTv_desc(desc_Off);
+        }
     }
+
+
 }

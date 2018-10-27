@@ -18,14 +18,14 @@ public class SettingActivity extends Activity {
         setContentView(R.layout.activity_setting);
         final SettingItemView settingItemView = findViewById(R.id.sv_update);
         sharedPreferences = getSharedPreferences("config",MODE_PRIVATE);
-        settingItemView.setTv_title("自动更新设置");
+       // settingItemView.setTv_title("自动更新设置");
         if(sharedPreferences.getBoolean("auto_update",true)){
 
-            settingItemView.setTv_desc("自动更新设置已经开启");
+          //  settingItemView.setTv_desc("自动更新设置已经开启");
             settingItemView.setIsChecked(true);
         }else{
 
-            settingItemView.setTv_desc("自动更新设置已经关闭");
+            //settingItemView.setTv_desc("自动更新设置已经关闭");
             settingItemView.setIsChecked(false);
         }
 
@@ -35,11 +35,11 @@ public class SettingActivity extends Activity {
                    //判断是否选中
                    if(settingItemView.isChecked()){
                         settingItemView.setIsChecked(false);
-                        settingItemView.setTv_desc("自动更新设置已经关闭");
+                        //settingItemView.setTv_desc("自动更新设置已经关闭");
                         sharedPreferences.edit().putBoolean("auto_update",false).commit();
                    }else{
                        settingItemView.setIsChecked(true);
-                       settingItemView.setTv_desc("自动更新设置已经开启");
+                       //settingItemView.setTv_desc("自动更新设置已经开启");
                        sharedPreferences.edit().putBoolean("auto_update",true).commit();
                    }
             }
