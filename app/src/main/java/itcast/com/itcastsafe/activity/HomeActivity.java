@@ -1,15 +1,13 @@
 package itcast.com.itcastsafe.activity;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
-import android.widget.GridView;
-import android.widget.ImageView;
-import android.widget.TextView;
+import android.widget.*;
 import itcast.com.itcastsafe.R;
 
 public class HomeActivity extends Activity {
@@ -28,6 +26,21 @@ public class HomeActivity extends Activity {
         setContentView(R.layout.activity_home);
         gvHome = findViewById(R.id.gv_home);
         gvHome.setAdapter(new HomeAdapter());
+
+        //设置监听
+
+       gvHome.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+           @Override
+           public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+               switch (position){
+                   case 8:
+                       //设置中心
+                       startActivity(new Intent(HomeActivity.this,SettingActivity.class));
+                       break;
+               };
+
+           }
+       });
     }
 
     class HomeAdapter extends BaseAdapter{

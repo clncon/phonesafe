@@ -28,14 +28,21 @@
                 android:name=".activity.HomeActivity"
                 android:label="@string/title_activity_home">
         </activity>
+
         <provider
                 android:name="android.support.v4.content.FileProvider"
                 android:authorities="itcast.com.itcastsafe.fileProvider"
-                android:grantUriPermissions="true"
-                android:exported="false">
-            <meta-data android:name="android.support.FILE_PROVIDER_PATHS" android:resource="@xml/file_paths" />
+                android:exported="false"
+                android:grantUriPermissions="true">
+            <meta-data
+                    android:name="android.support.FILE_PROVIDER_PATHS"
+                    android:resource="@xml/file_paths"/>
         </provider>
-    </application>
 
+        <activity
+                android:name=".activity.SettingActivity"
+                android:label="@string/title_activity_setting">
+        </activity>
+    </application>
 
 </manifest>
