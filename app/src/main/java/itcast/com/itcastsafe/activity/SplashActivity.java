@@ -6,6 +6,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.net.Uri;
@@ -98,7 +99,14 @@ public class SplashActivity extends Activity {
         TextView tv_version  = findViewById(R.id.tv_version);
         tv_version.setText("版本:"+versionName);//动态设置版本信息
         mTv_progress = findViewById(R.id.tv_progress);//默认隐藏
-        checkVersion();
+        SharedPreferences config = getSharedPreferences("config", MODE_PRIVATE);
+        if(config.getBoolean("auto_update",true)){
+            checkVersion();
+
+        }else {
+            mHandler.sendEmptyMessageDelayed(CODE_ENTER_HOME,2000);
+        }
+
         if (Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP) {
             if (ActivityCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
                 ActivityCompat.requestPermissions(this, PERMISSIONS_STORAGE, REQUEST_PERMISSION_CODE);
