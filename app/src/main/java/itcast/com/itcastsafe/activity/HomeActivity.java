@@ -1,8 +1,11 @@
 package itcast.com.itcastsafe.activity;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -20,12 +23,20 @@ public class HomeActivity extends Activity {
             R.mipmap.home_taskmanager, R.mipmap.home_netmanager,
             R.mipmap.home_trojan, R.mipmap.home_sysoptimize,
             R.mipmap.home_tools, R.mipmap.home_settings};
+    private Button bt_ok;
+    private Button bt_cancel;
+    private View dailog_set_password;
+    private AlertDialog.Builder alertDialog;
+    private SharedPreferences config;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        config = getSharedPreferences("config", MODE_PRIVATE);
         setContentView(R.layout.activity_home);
         gvHome = findViewById(R.id.gv_home);
         gvHome.setAdapter(new HomeAdapter());
+
 
         //设置监听
 
@@ -37,11 +48,65 @@ public class HomeActivity extends Activity {
                        //设置中心
                        startActivity(new Intent(HomeActivity.this,SettingActivity.class));
                        break;
+
+                   case 0:
+                       //手机防盗
+                       String password = config.getString("password", null);
+                       if(TextUtils.isEmpty(password)){
+                           showPasswordConfrimDialog();
+                       }else{
+                           System.out.println("确认密码：fsdfs");
+                       }
+                       break;
                };
 
            }
        });
     }
+
+    /**
+     * 展示输入密码的对话框
+     */
+    private void showPasswordConfrimDialog() {
+        alertDialog = new AlertDialog.Builder(HomeActivity.this);
+        dailog_set_password = View.inflate(HomeActivity.this, R.layout.dailog_set_password, null);
+        bt_ok = dailog_set_password.findViewById(R.id.bt_ok);
+        bt_cancel = dailog_set_password.findViewById(R.id.bt_cancel);
+        alertDialog.setView(dailog_set_password);//将布局文件内容交给alertDialog
+
+        final AlertDialog dia = alertDialog.show();
+
+
+        bt_ok.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                EditText et_password = dailog_set_password.findViewById(R.id.et_password);
+                EditText et_confrimpassword = dailog_set_password.findViewById(R.id.et_confrimpassword);
+                String password = et_password.getText().toString();
+                String confirmpassword = et_confrimpassword.getText().toString();
+                if(TextUtils.isEmpty(password)||TextUtils.isEmpty(confirmpassword)){
+                    Toast.makeText(HomeActivity.this,"输入框不能为空",Toast.LENGTH_SHORT).show();
+                }else if(!password.equals(confirmpassword)){
+                    Toast.makeText(HomeActivity.this,"两次输入必须一致",Toast.LENGTH_SHORT).show();
+                }else{
+                       config.edit().putString("password",password).commit();
+                       Toast.makeText(HomeActivity.this,"设置成功",Toast.LENGTH_SHORT).show();
+                       dia.dismiss();
+                }
+
+            }
+        });
+
+        bt_cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+              dia.dismiss();
+            }
+        });
+    }
+
+
+
 
     class HomeAdapter extends BaseAdapter{
 
