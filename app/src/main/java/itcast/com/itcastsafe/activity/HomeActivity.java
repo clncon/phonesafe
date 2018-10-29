@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.*;
 import itcast.com.itcastsafe.R;
+import itcast.com.itcastsafe.activity.utils.MD5Utils;
 
 public class HomeActivity extends Activity {
 
@@ -80,7 +81,7 @@ public class HomeActivity extends Activity {
                 EditText et_password = dailog_input_password.findViewById(R.id.et_password);
                 String inputPassword = et_password.getText().toString();
                 String password = config.getString("password", null);
-                if(password.equals(inputPassword)){
+                if(password.equals(MD5Utils.encode(inputPassword))){
                     Toast.makeText(HomeActivity.this,"密码正确",Toast.LENGTH_SHORT).show();
 
                 }else{
@@ -124,7 +125,7 @@ public class HomeActivity extends Activity {
                 }else if(!password.equals(confirmpassword)){
                     Toast.makeText(HomeActivity.this,"两次输入必须一致",Toast.LENGTH_SHORT).show();
                 }else{
-                       config.edit().putString("password",password).commit();
+                       config.edit().putString("password", MD5Utils.encode(password)).commit();
                        Toast.makeText(HomeActivity.this,"设置成功",Toast.LENGTH_SHORT).show();
                        dia.dismiss();
                 }
