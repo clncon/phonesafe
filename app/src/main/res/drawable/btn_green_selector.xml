@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+
+      <!--按下的时候-->
+     <item android:drawable="@drawable/function_greenbutton_pressed" android:state_pressed="true" ></item>
+
+      <!--当获取焦点的时候-->
+     <item android:drawable="@drawable/function_greenbutton_pressed" android:state_focused="true"></item>
+    <!--放开的时候-->
+    <item android:drawable="@drawable/function_greenbutton_normal" android:state_pressed="false" ></item>
+
+</selector>

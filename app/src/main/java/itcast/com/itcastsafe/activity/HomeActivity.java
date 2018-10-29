@@ -82,7 +82,10 @@ public class HomeActivity extends Activity {
                 String inputPassword = et_password.getText().toString();
                 String password = config.getString("password", null);
                 if(password.equals(MD5Utils.encode(inputPassword))){
-                    Toast.makeText(HomeActivity.this,"密码正确",Toast.LENGTH_SHORT).show();
+                   // Toast.makeText(HomeActivity.this,"密码正确",Toast.LENGTH_SHORT).show();
+
+                    startActivity(new Intent(getApplicationContext(),LostFindActivity.class));
+                    dia.dismiss();
 
                 }else{
                     Toast.makeText(HomeActivity.this,"密码错误",Toast.LENGTH_SHORT).show();
