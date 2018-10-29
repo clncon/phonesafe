@@ -23,10 +23,7 @@ public class HomeActivity extends Activity {
             R.mipmap.home_taskmanager, R.mipmap.home_netmanager,
             R.mipmap.home_trojan, R.mipmap.home_sysoptimize,
             R.mipmap.home_tools, R.mipmap.home_settings};
-    private Button bt_ok;
-    private Button bt_cancel;
-    private View dailog_set_password;
-    private AlertDialog.Builder alertDialog;
+
     private SharedPreferences config;
 
     @Override
@@ -55,7 +52,7 @@ public class HomeActivity extends Activity {
                        if(TextUtils.isEmpty(password)){
                            showPasswordConfrimDialog();
                        }else{
-                           System.out.println("确认密码：fsdfs");
+                          showInputPasswordDialog();
                        }
                        break;
                };
@@ -67,11 +64,49 @@ public class HomeActivity extends Activity {
     /**
      * 展示输入密码的对话框
      */
+    private void showInputPasswordDialog(){
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(HomeActivity.this);
+        final View dailog_input_password = View.inflate(HomeActivity.this, R.layout.dailog_input_password, null);
+        Button bt_ok = dailog_input_password.findViewById(R.id.bt_ok);
+        Button bt_cancel = dailog_input_password.findViewById(R.id.bt_cancel);
+        alertDialog.setView(dailog_input_password);//将布局文件内容交给alertDialog
+
+        final AlertDialog dia = alertDialog.show();
+
+
+        bt_ok.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                EditText et_password = dailog_input_password.findViewById(R.id.et_password);
+                String inputPassword = et_password.getText().toString();
+                String password = config.getString("password", null);
+                if(password.equals(inputPassword)){
+                    Toast.makeText(HomeActivity.this,"密码正确",Toast.LENGTH_SHORT).show();
+
+                }else{
+                    Toast.makeText(HomeActivity.this,"密码错误",Toast.LENGTH_SHORT).show();
+
+                }
+
+
+            }
+        });
+
+        bt_cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dia.dismiss();
+            }
+        });
+    }
+    /**
+     * 展示设置密码的对话框
+     */
     private void showPasswordConfrimDialog() {
-        alertDialog = new AlertDialog.Builder(HomeActivity.this);
-        dailog_set_password = View.inflate(HomeActivity.this, R.layout.dailog_set_password, null);
-        bt_ok = dailog_set_password.findViewById(R.id.bt_ok);
-        bt_cancel = dailog_set_password.findViewById(R.id.bt_cancel);
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(HomeActivity.this);
+        final View dailog_set_password = View.inflate(HomeActivity.this, R.layout.dailog_set_password, null);
+        Button bt_ok = dailog_set_password.findViewById(R.id.bt_ok);
+        Button bt_cancel = dailog_set_password.findViewById(R.id.bt_cancel);
         alertDialog.setView(dailog_set_password);//将布局文件内容交给alertDialog
 
         final AlertDialog dia = alertDialog.show();
