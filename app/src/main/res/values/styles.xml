@@ -30,4 +30,30 @@
         <item name="android:textColor">#000</item>
     </style>
 
+
+
+    <style name="PreviousButton">
+        <item name="android:text">上一步</item>
+        <item name="android:drawableLeft">@mipmap/previous</item>
+        <item name="android:background">@drawable/btn_green_selector</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_alignParentBottom">true</item>
+        <item name="android:layout_alignParentStart">true</item>
+
+    </style>
+
+
+
+    <style name="NextButton">
+        <item name="android:text">下一步</item>
+        <item name="android:drawableRight">@mipmap/next</item>
+        <item name="android:background">@drawable/btn_green_selector</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_alignParentBottom">true</item>
+        <item name="android:layout_alignParentEnd">true</item>
+
+    </style>
+
 </resources>
