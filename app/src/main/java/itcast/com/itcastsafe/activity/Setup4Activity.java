@@ -1,9 +1,11 @@
 package itcast.com.itcastsafe.activity;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import itcast.com.itcastsafe.R;
 
 public class Setup4Activity extends Activity {
@@ -12,6 +14,19 @@ public class Setup4Activity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_setup4);
+    }
+
+
+    public void next(View v){
+        getSharedPreferences("config",MODE_PRIVATE).edit().putBoolean("configed",true).commit();
+        startActivity(new Intent(Setup4Activity.this,LostFindActivity.class));
+        finish();
+
+    }
+
+    public void previous(View v){
+        startActivity(new Intent(Setup4Activity.this,Setup3Activity.class));
+        finish();
     }
 
     @Override
