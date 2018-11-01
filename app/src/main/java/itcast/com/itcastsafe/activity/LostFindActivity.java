@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import itcast.com.itcastsafe.R;
 
 public class LostFindActivity extends Activity {
@@ -28,6 +29,13 @@ public class LostFindActivity extends Activity {
             finish();
 
         }
+    }
+
+    public void reEnter(View v){
+
+        startActivity(new Intent(LostFindActivity.this,Setup1Activity.class));
+        finish();
+
     }
 
 

@@ -21,12 +21,23 @@ public class Setup4Activity extends Activity {
         getSharedPreferences("config",MODE_PRIVATE).edit().putBoolean("configed",true).commit();
         startActivity(new Intent(Setup4Activity.this,LostFindActivity.class));
         finish();
+        /**
+         * 两个界面切换的动画
+         */
+        overridePendingTransition(R.anim.tran_in,R.anim.tran_out);
 
     }
 
     public void previous(View v){
         startActivity(new Intent(Setup4Activity.this,Setup3Activity.class));
         finish();
+        /**
+         * 两个界面切换的动画
+         */
+        /**
+         * 两个界面切换的动画
+         */
+        overridePendingTransition(R.anim.previous_in,R.anim.previous_out);
     }
 
     @Override

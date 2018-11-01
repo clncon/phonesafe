@@ -11,4 +11,116 @@
             android:text="手机防盗"
         />
 
+
+    <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        <TextView
+                style="@style/ContentStyle"
+                android:id="@+id/textView4"
+                android:text="安全号码"
+
+        />
+
+        <TextView
+                android:id="@+id/textView5"
+                android:text="17521078644"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:textColor="#000"
+                android:textSize="16sp"
+                android:layout_marginRight="10dp"
+        />
+
+    </RelativeLayout>
+    <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:background="@mipmap/listview_divider"
+    />
+    <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        <TextView
+                style="@style/ContentStyle"
+                android:text="防盗保护是否开启"
+
+        />
+
+        <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@mipmap/lock"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+        />
+
+    </RelativeLayout>
+    <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:background="@mipmap/listview_divider"
+    />
+    <TextView
+            style="@style/ContentStyle"
+            android:layout_width="match_parent"
+            android:text="重新进入向导"
+            android:clickable="true"
+            android:onClick="reEnter"
+            android:background="@drawable/shap_selector"
+
+    />
+    <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:background="@mipmap/listview_divider"
+    />
+    <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginTop="5dp"
+            android:padding="3dp"
+            android:background="#5000"
+            android:text="功能简介"
+            android:textColor="#000"
+            android:textSize="20sp"
+
+
+    />
+    <TextView
+            style="@style/ContentStyle"
+            android:drawableLeft="@android:drawable/star_big_on"
+            android:gravity="center_vertical"
+            android:text="GPS追踪：#*location*#"
+
+    />
+    <TextView
+            style="@style/ContentStyle"
+            android:drawableLeft="@android:drawable/star_big_on"
+            android:gravity="center_vertical"
+            android:text="播放报警音乐：#*alarm*#"
+
+    />
+    <TextView
+            style="@style/ContentStyle"
+            android:drawableLeft="@android:drawable/star_big_on"
+            android:gravity="center_vertical"
+            android:text="远程删除数据：#*wipedata*#"
+
+    />
+    <TextView
+            style="@style/ContentStyle"
+            android:drawableLeft="@android:drawable/star_big_on"
+            android:gravity="center_vertical"
+            android:text="远程锁屏：#*lockscreen*#"
+
+    />
+
 </LinearLayout>

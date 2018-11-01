@@ -19,12 +19,19 @@ public class Setup2Activity extends Activity {
     public void next(View v){
         startActivity(new Intent(Setup2Activity.this,Setup3Activity.class));
         finish();
-
+        /**
+         * 两个界面切换的动画
+         */
+        overridePendingTransition(R.anim.tran_in,R.anim.tran_out);
     }
 
     public void previous(View v){
        startActivity(new Intent(Setup2Activity.this,Setup1Activity.class));
         finish();
+        /**
+         * 两个界面切换的动画
+         */
+        overridePendingTransition(R.anim.previous_in,R.anim.previous_out);
     }
 
     @Override
