@@ -3,20 +3,33 @@ package itcast.com.itcastsafe.activity;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
+import android.view.*;
 import itcast.com.itcastsafe.R;
 
-public class Setup2Activity extends Activity {
+public class Setup2Activity extends BaseSetupActivity{
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_setup2);
+
     }
 
-    public void next(View v){
+
+
+    public void showPreviousPage(){
+        startActivity(new Intent(Setup2Activity.this,Setup1Activity.class));
+        finish();
+        /**
+         * 两个界面切换的动画
+         */
+        overridePendingTransition(R.anim.previous_in,R.anim.previous_out);
+
+    }
+
+    public void showNextPage(){
         startActivity(new Intent(Setup2Activity.this,Setup3Activity.class));
         finish();
         /**
@@ -25,14 +38,6 @@ public class Setup2Activity extends Activity {
         overridePendingTransition(R.anim.tran_in,R.anim.tran_out);
     }
 
-    public void previous(View v){
-       startActivity(new Intent(Setup2Activity.this,Setup1Activity.class));
-        finish();
-        /**
-         * 两个界面切换的动画
-         */
-        overridePendingTransition(R.anim.previous_in,R.anim.previous_out);
-    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

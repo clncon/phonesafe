@@ -63,6 +63,8 @@
                 android:name=".activity.Setup4Activity"
                 android:label="@string/title_activity_setup4">
         </activity>
+        <activity android:name=".activity.BaseSetupActivity">
+        </activity>
     </application>
 
 </manifest>

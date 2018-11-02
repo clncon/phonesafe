@@ -8,7 +8,7 @@ import android.view.MenuItem;
 import android.view.View;
 import itcast.com.itcastsafe.R;
 
-public class Setup4Activity extends Activity {
+public class Setup4Activity extends BaseSetupActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -16,19 +16,8 @@ public class Setup4Activity extends Activity {
         setContentView(R.layout.activity_setup4);
     }
 
-
-    public void next(View v){
-        getSharedPreferences("config",MODE_PRIVATE).edit().putBoolean("configed",true).commit();
-        startActivity(new Intent(Setup4Activity.this,LostFindActivity.class));
-        finish();
-        /**
-         * 两个界面切换的动画
-         */
-        overridePendingTransition(R.anim.tran_in,R.anim.tran_out);
-
-    }
-
-    public void previous(View v){
+    @Override
+    public void showPreviousPage() {
         startActivity(new Intent(Setup4Activity.this,Setup3Activity.class));
         finish();
         /**
@@ -40,6 +29,16 @@ public class Setup4Activity extends Activity {
         overridePendingTransition(R.anim.previous_in,R.anim.previous_out);
     }
 
+    @Override
+    public void showNextPage() {
+        getSharedPreferences("config",MODE_PRIVATE).edit().putBoolean("configed",true).commit();
+        startActivity(new Intent(Setup4Activity.this,LostFindActivity.class));
+        finish();
+        /**
+         * 两个界面切换的动画
+         */
+        overridePendingTransition(R.anim.tran_in,R.anim.tran_out);
+    }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.

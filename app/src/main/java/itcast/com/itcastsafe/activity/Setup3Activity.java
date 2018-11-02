@@ -8,7 +8,7 @@ import android.view.MenuItem;
 import android.view.View;
 import itcast.com.itcastsafe.R;
 
-public class Setup3Activity extends Activity {
+public class Setup3Activity extends BaseSetupActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -16,22 +16,24 @@ public class Setup3Activity extends Activity {
         setContentView(R.layout.activity_setup3);
     }
 
-    public void next(View v){
-        startActivity(new Intent(Setup3Activity.this,Setup4Activity.class));
-        finish();
-        /**
-         * 两个界面切换的动画
-         */
-        overridePendingTransition(R.anim.tran_in,R.anim.tran_out);
-    }
-
-    public void previous(View v){
+    @Override
+    public void showPreviousPage() {
         startActivity(new Intent(Setup3Activity.this,Setup2Activity.class));
         finish();
         /**
          * 两个界面切换的动画
          */
         overridePendingTransition(R.anim.previous_in,R.anim.previous_out);
+    }
+
+    @Override
+    public void showNextPage() {
+        startActivity(new Intent(Setup3Activity.this,Setup4Activity.class));
+        finish();
+        /**
+         * 两个界面切换的动画
+         */
+        overridePendingTransition(R.anim.tran_in,R.anim.tran_out);
     }
 
     @Override
