@@ -15,6 +15,7 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.*;
 import itcast.com.itcastsafe.R;
+import itcast.com.itcastsafe.activity.utils.ToastUtil;
 import itcast.com.itcastsafe.activity.view.SettingItemView;
 
 public class Setup2Activity extends BaseSetupActivity{
@@ -24,13 +25,11 @@ public class Setup2Activity extends BaseSetupActivity{
     private static String[] PERMISSIONS_PHONE_STATE = {
             Manifest.permission.READ_PHONE_STATE};
     private static int REQUEST_PERMISSION_CODE = 0;
-    SharedPreferences mConfig;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_setup2);
         sv_bind = findViewById(R.id.sv_bind);
-        mConfig = getSharedPreferences("config", MODE_PRIVATE);
         String sim = mConfig.getString("sim",null);
         if(!TextUtils.isEmpty(sim)){
             sv_bind.setIsChecked(true);
@@ -90,6 +89,11 @@ public class Setup2Activity extends BaseSetupActivity{
     }
 
     public void showNextPage(){
+        String sim = mConfig.getString("sim", null);
+        if(TextUtils.isEmpty(sim)){
+            ToastUtil.showToast(Setup2Activity.this,"sim卡不能为空");
+            return;
+        }
         startActivity(new Intent(Setup2Activity.this,Setup3Activity.class));
         finish();
         /**

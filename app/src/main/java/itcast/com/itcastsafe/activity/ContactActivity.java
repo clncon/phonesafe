@@ -1,12 +1,14 @@
 package itcast.com.itcastsafe.activity;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import itcast.com.itcastsafe.R;
@@ -26,6 +28,16 @@ public class ContactActivity extends Activity {
         listView = findViewById(R.id.lv_list);
         readContact = readContact();
         listView.setAdapter(new SimpleAdapter(this,readContact,R.layout.contact_list_item,new String[]{"phone","name"},new int[]{R.id.tv_phone,R.id.tv_name}));
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                 String phone = readContact.get(position).get("phone");
+                Intent intent = new Intent();
+                intent.putExtra("phone",phone);
+                setResult(Activity.RESULT_OK,intent);
+                finish();
+            }
+        });
     }
 
     public ArrayList<HashMap<String,String>> readContact(){

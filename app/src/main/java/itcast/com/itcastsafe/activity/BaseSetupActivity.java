@@ -1,6 +1,7 @@
 package itcast.com.itcastsafe.activity;
 
 import android.app.Activity;
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.GestureDetector;
@@ -9,9 +10,10 @@ import android.view.View;
 
 public abstract class BaseSetupActivity extends Activity {
     private GestureDetector mDetector;
+    public SharedPreferences mConfig;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
+        mConfig = getSharedPreferences("config", MODE_PRIVATE);
         super.onCreate(savedInstanceState);
         mDetector = new GestureDetector(new GestureDetector.SimpleOnGestureListener(){
 

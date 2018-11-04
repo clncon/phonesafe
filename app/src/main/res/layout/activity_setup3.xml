@@ -26,9 +26,12 @@
     />
 
    <EditText
+           android:id="@+id/et_phone"
            android:hint="请输入或选择安全号码"
            android:layout_width="match_parent"
-           android:layout_height="wrap_content"/>
+           android:layout_height="wrap_content"
+           android:inputType="phone"
+   />
 
    <Button
            android:text="选择联系人"
