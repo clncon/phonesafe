@@ -50,7 +50,14 @@ public class SplashActivity extends Activity {
     protected static final int CODE_ENTER_HOME=4;
     private static String[] PERMISSIONS_STORAGE = {
             Manifest.permission.READ_EXTERNAL_STORAGE,
-            Manifest.permission.WRITE_EXTERNAL_STORAGE};
+            Manifest.permission.WRITE_EXTERNAL_STORAGE
+
+    };
+    private static String[] PERMISSIONS_CONTACTS = {
+             Manifest.permission.READ_CONTACTS
+
+    };
+
     private static int REQUEST_PERMISSION_CODE = 0;
     private String mVersionName;
     private int mVersionCode;
@@ -113,6 +120,10 @@ public class SplashActivity extends Activity {
         if (Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP) {
             if (ActivityCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
                 ActivityCompat.requestPermissions(this, PERMISSIONS_STORAGE, REQUEST_PERMISSION_CODE);
+            }
+
+            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_CONTACTS) != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(this, PERMISSIONS_CONTACTS, REQUEST_PERMISSION_CODE);
             }
         }
 

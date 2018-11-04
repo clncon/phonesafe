@@ -8,6 +8,8 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
 
     <application
             android:allowBackup="true"
@@ -64,7 +66,16 @@
                 android:name=".activity.Setup4Activity"
                 android:label="@string/title_activity_setup4">
         </activity>
-        <activity android:name=".activity.BaseSetupActivity">
+
+        <receiver android:name=".activity.receiver.BootCompleteReceiver">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED"/>
+            </intent-filter>
+        </receiver>
+
+        <activity
+                android:name=".activity.ContactActivity"
+                android:label="@string/title_activity_contact">
         </activity>
     </application>
 
