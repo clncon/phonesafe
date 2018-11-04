@@ -17,13 +17,12 @@
             android:layout_height="wrap_content">
         <TextView
                 style="@style/ContentStyle"
-                android:id="@+id/textView4"
                 android:text="安全号码"
 
         />
 
         <TextView
-                android:id="@+id/textView5"
+                android:id="@+id/tv_phone"
                 android:text="17521078644"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -51,6 +50,7 @@
         />
 
         <ImageView
+                android:id="@+id/iv_protect"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:src="@mipmap/lock"
