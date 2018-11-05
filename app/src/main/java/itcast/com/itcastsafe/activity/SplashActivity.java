@@ -12,6 +12,7 @@ import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.*;
 import android.preference.PreferenceManager;
+import android.provider.Telephony;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.FileProvider;
@@ -55,6 +56,12 @@ public class SplashActivity extends Activity {
     };
     private static String[] PERMISSIONS_CONTACTS = {
              Manifest.permission.READ_CONTACTS
+
+    };
+    private static String[] PERMISSIONS_SEND_SMS = {
+             Manifest.permission.SEND_SMS,
+             Manifest.permission.RECEIVE_SMS,
+             Manifest.permission.RECEIVE_BOOT_COMPLETED
 
     };
 
@@ -124,6 +131,9 @@ public class SplashActivity extends Activity {
 
             if (ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_CONTACTS) != PackageManager.PERMISSION_GRANTED) {
                 ActivityCompat.requestPermissions(this, PERMISSIONS_CONTACTS, REQUEST_PERMISSION_CODE);
+            }
+            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.SEND_SMS) != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(this, PERMISSIONS_SEND_SMS, REQUEST_PERMISSION_CODE);
             }
         }
 
@@ -363,4 +373,22 @@ public class SplashActivity extends Activity {
         entryHome();
         super.onActivityResult(requestCode, resultCode, data);
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        final String myPackageName = getPackageName();
+        if (!Telephony.Sms.getDefaultSmsPackage(this).equals(myPackageName)) {
+            System.out.println(Telephony.Sms.getDefaultSmsPackage(this));
+            Intent intent =
+                    new Intent(Telephony.Sms.Intents.ACTION_CHANGE_DEFAULT);
+            intent.putExtra(Telephony.Sms.Intents.EXTRA_PACKAGE_NAME,
+                    myPackageName);
+            startActivity(intent);
+
+
+        }
+    }
+
 }

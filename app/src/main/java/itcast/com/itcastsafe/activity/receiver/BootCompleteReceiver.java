@@ -4,6 +4,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.telephony.SmsManager;
 import android.telephony.TelephonyManager;
 import android.text.TextUtils;
 import android.widget.Toast;
@@ -19,13 +20,17 @@ public class BootCompleteReceiver extends BroadcastReceiver {
         String sim = config.getString("sim", null);
         if(!TextUtils.isEmpty(sim)){
             TelephonyManager te = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
-            String simSerialNumber = te.getSimSerialNumber();
+            String simSerialNumber = te.getSimSerialNumber()+"111";
             if(sim.equals(simSerialNumber)){
                 System.out.println("手机安全");
                 Toast.makeText(context,"手机安全",Toast.LENGTH_SHORT).show();
             }else{
                 System.out.println("手机危险，sim已经发生了变化");
                 Toast.makeText(context,"手机危险，sim已经发生了变化",Toast.LENGTH_SHORT).show();
+                String safe_phone = config.getString("phone", "");
+                //发送安全号码
+                SmsManager smsManager = SmsManager.getDefault();
+                smsManager.sendTextMessage(safe_phone,null,"sim card changed",null,null);
 
             }
         }
