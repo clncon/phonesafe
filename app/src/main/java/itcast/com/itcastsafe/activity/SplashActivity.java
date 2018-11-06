@@ -64,6 +64,11 @@ public class SplashActivity extends Activity {
              Manifest.permission.RECEIVE_BOOT_COMPLETED
 
     };
+    private static String[] PERMISSIONS_LOCATION = {
+             Manifest.permission.ACCESS_FINE_LOCATION,
+             Manifest.permission.ACCESS_COARSE_LOCATION
+
+    };
 
     private static int REQUEST_PERMISSION_CODE = 0;
     private String mVersionName;
@@ -134,6 +139,9 @@ public class SplashActivity extends Activity {
             }
             if (ActivityCompat.checkSelfPermission(this, Manifest.permission.SEND_SMS) != PackageManager.PERMISSION_GRANTED) {
                 ActivityCompat.requestPermissions(this, PERMISSIONS_SEND_SMS, REQUEST_PERMISSION_CODE);
+            }
+            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(this, PERMISSIONS_LOCATION, REQUEST_PERMISSION_CODE);
             }
         }
 
@@ -378,7 +386,7 @@ public class SplashActivity extends Activity {
     protected void onResume() {
         super.onResume();
 
-        final String myPackageName = getPackageName();
+     /*   final String myPackageName = getPackageName();
         if (!Telephony.Sms.getDefaultSmsPackage(this).equals(myPackageName)) {
             System.out.println(Telephony.Sms.getDefaultSmsPackage(this));
             Intent intent =
@@ -388,7 +396,7 @@ public class SplashActivity extends Activity {
             startActivity(intent);
 
 
-        }
+        }*/
     }
 
 }

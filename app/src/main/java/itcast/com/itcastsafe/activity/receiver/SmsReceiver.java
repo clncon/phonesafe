@@ -3,9 +3,11 @@ package itcast.com.itcastsafe.activity.receiver;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.media.MediaPlayer;
 import android.telephony.SmsMessage;
 import itcast.com.itcastsafe.R;
+import itcast.com.itcastsafe.activity.service.LocationService;
 
 public class SmsReceiver extends BroadcastReceiver {
 
@@ -25,6 +27,13 @@ public class SmsReceiver extends BroadcastReceiver {
                 mediaPlayer.setLooping(true);
                 mediaPlayer.start();
                 abortBroadcast();//中断短信的传递
+            }else if("#*loaction*#".equals(messageBody)){
+                //获取经纬度坐标
+                context.startService(new Intent(context,LocationService.class));
+                SharedPreferences config = context.getSharedPreferences("config", Context.MODE_PRIVATE);
+                String location = config.getString("location", "gettiing location...");
+                System.out.println("location:"+location);
+                abortBroadcast();
             }
         }
 
