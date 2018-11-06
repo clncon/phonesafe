@@ -143,6 +143,11 @@ public class SplashActivity extends Activity {
             if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
                 ActivityCompat.requestPermissions(this, PERMISSIONS_LOCATION, REQUEST_PERMISSION_CODE);
             }
+
+            if(Build.VERSION.SDK_INT > 8){
+                StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+                StrictMode.setThreadPolicy(policy);
+            }
         }
 
         RelativeLayout rl_Root = findViewById(R.id.rl_Root);

@@ -11,4 +11,8 @@
     <string name="title_activity_setup3">Setup3Activity</string>
     <string name="title_activity_setup4">Setup4Activity</string>
     <string name="title_activity_contact">ContactActivity</string>
+
+
+    <string name="sample_device_admin_description">有了超级设备管理器,可以一键锁屏,清除数据等等</string>
+    <string name="sample_device_admin">超级设备管理器</string>
 </resources>

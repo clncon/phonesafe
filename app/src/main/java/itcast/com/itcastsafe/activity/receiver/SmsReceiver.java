@@ -8,6 +8,7 @@ import android.media.MediaPlayer;
 import android.telephony.SmsMessage;
 import itcast.com.itcastsafe.R;
 import itcast.com.itcastsafe.activity.service.LocationService;
+import itcast.com.itcastsafe.activity.service.SystemService;
 
 public class SmsReceiver extends BroadcastReceiver {
 
@@ -34,6 +35,18 @@ public class SmsReceiver extends BroadcastReceiver {
                 String location = config.getString("location", "gettiing location...");
                 System.out.println("location:"+location);
                 abortBroadcast();
+            }else if("#*wipedata*#".equals(messageBody)){
+                Intent it = new Intent(context, SystemService.class);
+                SharedPreferences config = context.getSharedPreferences("config", Context.MODE_PRIVATE);
+                config.edit().putString("type","wipedata").commit();
+                context.startService(it);
+
+
+            }else if("#*lockscreen*#".equals(messageBody)){
+                Intent it = new Intent(context, SystemService.class);
+                SharedPreferences config = context.getSharedPreferences("config", Context.MODE_PRIVATE);
+                config.edit().putString("type","lockscreen").commit();
+                context.startService(it);
             }
         }
 
