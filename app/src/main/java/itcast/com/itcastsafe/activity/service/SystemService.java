@@ -53,7 +53,7 @@ public class SystemService extends Service {
         intent.putExtra(DevicePolicyManager.EXTRA_DEVICE_ADMIN,mDeviceAdminSample);
         intent.putExtra(DevicePolicyManager.EXTRA_ADD_EXPLANATION,"请激活设备管理器");
         intent.setFlags( Intent.FLAG_ACTIVITY_NEW_TASK);
-        
+
         startActivity(intent);
     }
 

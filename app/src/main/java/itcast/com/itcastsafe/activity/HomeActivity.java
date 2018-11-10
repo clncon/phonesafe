@@ -47,7 +47,10 @@ public class HomeActivity extends Activity {
                        //设置中心
                        startActivity(new Intent(HomeActivity.this,SettingActivity.class));
                        break;
-
+                       //高级工具
+                   case 7:
+                       startActivity(new Intent(HomeActivity.this,AToolsActivity.class));
+                       break;
                    case 0:
                        //手机防盗
                        String password = config.getString("password", null);

@@ -122,6 +122,7 @@ public class SplashActivity extends Activity {
         tv_version.setText("版本:"+versionName);//动态设置版本信息
         mTv_progress = findViewById(R.id.tv_progress);//默认隐藏
         SharedPreferences config = getSharedPreferences("config", MODE_PRIVATE);
+        copyData("address.db");
         if(config.getBoolean("auto_update",true)){
             checkVersion();
 
@@ -402,6 +403,47 @@ public class SplashActivity extends Activity {
 
 
         }*/
-    }
 
+
+
+    }
+    //拷贝数据库
+    public void copyData(String database){
+        File file = new File(getFilesDir(),database);
+        InputStream is =null;
+        OutputStream os=null;
+                if(!file.exists()){
+
+                    try {
+                        is = getAssets().open(database);
+                        os = new FileOutputStream(file);
+                        byte[] buff = new byte[1024];
+                        int len=0;
+                        while((len=is.read(buff))!=-1){
+                            System.out.println("copy....."+buff.length);
+                            os.write(buff,0,len);
+                        }
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }finally {
+                        if(is!=null){
+                            try {
+                                is.close();
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                        }
+
+                        if(os!=null){
+                            try {
+                                os.close();
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                        }
+
+                    }
+                }
+
+    }
 }
