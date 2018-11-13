@@ -20,5 +20,13 @@
             itheima:desc_Off="自动更新设置已经关闭"
             itheima:desc_On="自动更新设置已经开启"
     />
+    <itcast.com.itcastsafe.activity.view.SettingItemView
+            android:id="@+id/sv_address"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            itheima:title="电话归属地显示设置"
+            itheima:desc_Off="归属地显示已经关闭"
+            itheima:desc_On="归属地显示已经开启"
+    />
 
 </LinearLayout>
