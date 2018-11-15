@@ -17,6 +17,7 @@
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
     <uses-permission android:name="android.permission.ACCESS_MOCK_LOCATION"/>
     <uses-permission android:name="android.permission.VIBRATE"/>
+    <uses-permission android:name="android.permission.PROCESS_OUTGOING_CALLS"/>
 
     <application
             android:allowBackup="true"
@@ -123,9 +124,14 @@
                 android:label="@string/title_activity_address_">
         </activity>
 
-        <service
-                android:name=".activity.service.AddressService">
+        <service android:name=".activity.service.AddressService">
         </service>
+
+       <!-- <receiver
+                android:name=".activity.receiver.OutCallReceiver"
+                android:enabled="true"
+                android:exported="true">
+        </receiver>-->
     </application>
 
 </manifest>
