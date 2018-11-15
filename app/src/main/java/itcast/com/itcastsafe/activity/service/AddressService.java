@@ -5,10 +5,16 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.graphics.Color;
+import android.graphics.PixelFormat;
 import android.os.IBinder;
 import android.telephony.PhoneStateListener;
 import android.telephony.TelephonyManager;
+import android.view.View;
+import android.view.WindowManager;
+import android.widget.TextView;
 import android.widget.Toast;
+import itcast.com.itcastsafe.R;
 import itcast.com.itcastsafe.activity.dao.AddressDao;
 
 public class AddressService extends Service {
@@ -16,6 +22,8 @@ public class AddressService extends Service {
     private TelephonyManager tm;
     private MyListener myListener;
     private OutCallReceiver receiver;
+    private WindowManager mWM;
+    private View view;
 
     public AddressService() {
     }
@@ -45,7 +53,13 @@ public class AddressService extends Service {
                     System.out.println("电话铃响了");
                     String addressByNumber = AddressDao.getAddressByNumber(incomingNumber);//根据电话号码查询归属地
                     Toast.makeText(AddressService.this,addressByNumber,Toast.LENGTH_LONG).show();
+                    showToast(addressByNumber);
                     break;
+                case TelephonyManager.CALL_STATE_IDLE://电话出于闲置的状态
+                    if(mWM!=null&&view!=null){
+                        mWM.removeView(view);
+                        view=null;// 从window中移除view
+                    }
                 default:
                     break;
             }
@@ -60,6 +74,7 @@ public class AddressService extends Service {
             String number = getResultData();//获取电话号码
             String addressByNumber = AddressDao.getAddressByNumber(number);
             Toast.makeText(context,addressByNumber,Toast.LENGTH_LONG).show();
+            showToast(addressByNumber);
         }
     }
 
@@ -70,4 +85,32 @@ public class AddressService extends Service {
 
         unregisterReceiver(receiver);
     }
+
+
+    /**
+     * 自定义归属地浮窗
+     * @param text
+     */
+    public void showToast(String text){
+        mWM = (WindowManager) this.getSystemService(Context.WINDOW_SERVICE);
+        WindowManager.LayoutParams params = new WindowManager.LayoutParams();
+        params.height=WindowManager.LayoutParams.WRAP_CONTENT;
+        params.width=WindowManager.LayoutParams.WRAP_CONTENT;
+        params.flags=WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE
+                 |WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE
+                 |WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON;
+        params.format= PixelFormat.TRANSLUCENT;
+        params.type=WindowManager.LayoutParams.TYPE_TOAST;
+        params.setTitle("Toast");
+
+        view = View.inflate(this,R.layout.toast_address,null);
+        TextView tv_number = view.findViewById(R.id.tv_number);
+        tv_number.setText(text);
+        mWM.addView(view,params);//将view添加到屏幕
+
+
+    }
+
+
+
 }
