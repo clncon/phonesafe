@@ -28,5 +28,12 @@
             itheima:desc_Off="归属地显示已经关闭"
             itheima:desc_On="归属地显示已经开启"
     />
+    <itcast.com.itcastsafe.activity.view.SettingItemClick
+            android:id="@+id/sv_address_style"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:onClick="updateStyle"
+    />
 
 </LinearLayout>

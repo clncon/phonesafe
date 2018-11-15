@@ -1,10 +1,7 @@
 package itcast.com.itcastsafe.activity.service;
 
 import android.app.Service;
-import android.content.BroadcastReceiver;
-import android.content.Context;
-import android.content.Intent;
-import android.content.IntentFilter;
+import android.content.*;
 import android.graphics.Color;
 import android.graphics.PixelFormat;
 import android.os.IBinder;
@@ -24,7 +21,7 @@ public class AddressService extends Service {
     private OutCallReceiver receiver;
     private WindowManager mWM;
     private View view;
-
+    SharedPreferences config;
     public AddressService() {
     }
 
@@ -40,7 +37,7 @@ public class AddressService extends Service {
         tm = (TelephonyManager) getSystemService(TELEPHONY_SERVICE);
         myListener = new MyListener();
         tm.listen(myListener,PhoneStateListener.LISTEN_CALL_STATE);//监听来电状态
-
+        config = getSharedPreferences("config", MODE_PRIVATE);
         receiver = new OutCallReceiver();
         IntentFilter filter = new IntentFilter(Intent.ACTION_NEW_OUTGOING_CALL);
         registerReceiver(receiver,filter);
@@ -103,7 +100,11 @@ public class AddressService extends Service {
         params.type=WindowManager.LayoutParams.TYPE_TOAST;
         params.setTitle("Toast");
 
+        int[] bgs = new int[]{R.mipmap.call_locate_white,R.mipmap.call_locate_orange,R.mipmap.call_locate_blue,R.mipmap.call_locate_gray,R.mipmap.call_locate_green};
         view = View.inflate(this,R.layout.toast_address,null);
+        int style = config.getInt("AdressStyle", 0);
+        System.out.println("style:"+style);
+        view.setBackgroundResource(bgs[style]);//根据存储的样式来更新背景
         TextView tv_number = view.findViewById(R.id.tv_number);
         tv_number.setText(text);
         mWM.addView(view,params);//将view添加到屏幕

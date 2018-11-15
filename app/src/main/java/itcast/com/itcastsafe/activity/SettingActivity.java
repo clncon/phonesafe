@@ -1,6 +1,8 @@
 package itcast.com.itcastsafe.activity;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -11,13 +13,16 @@ import android.widget.TextView;
 import itcast.com.itcastsafe.R;
 import itcast.com.itcastsafe.activity.service.AddressService;
 import itcast.com.itcastsafe.activity.utils.ServiceStatusUtils;
+import itcast.com.itcastsafe.activity.view.SettingItemClick;
 import itcast.com.itcastsafe.activity.view.SettingItemView;
 
 public class SettingActivity extends Activity {
     private SharedPreferences sharedPreferences;
     private SettingItemView settingItemView;
     private SettingItemView addresstemView;
-
+    private SettingItemClick svAddressStyle;
+    private SettingItemClick sv_address_style;
+    final String[] items = new String[]{"半透明","活力橙","卫视蓝","金属灰","苹果绿"};
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,6 +32,7 @@ public class SettingActivity extends Activity {
         sharedPreferences = getSharedPreferences("config",MODE_PRIVATE);
         sv_update();
         sv_address();
+        initAddressStyle();
 
 
     }
@@ -81,6 +87,42 @@ public class SettingActivity extends Activity {
             }
         });
     }
-   
+
+    /**
+     * 修改提示框登录风格
+     */
+    public void initAddressStyle(){
+
+        sv_address_style = svAddressStyle = findViewById(R.id.sv_address_style);
+
+        sv_address_style.setTv_title("修改提示框归属地风格");
+        int adressStyle = sharedPreferences.getInt("AdressStyle", 0);
+
+        sv_address_style.setTv_desc(items[adressStyle]);
+    }
+
+
+    /**
+     * 弹出显示风格的单选框
+     */
+    public void updateStyle(View view){
+        final int adressStyle = sharedPreferences.getInt("AdressStyle", 0);
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setIcon(R.mipmap.ic_launcher);
+        builder.setTitle("归属地提示风格");
+        builder.setSingleChoiceItems(items, adressStyle, new DialogInterface.OnClickListener() {
+
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                sharedPreferences.edit().putInt("AdressStyle",which).commit();
+                sv_address_style.setTv_desc(items[which]);
+                dialog.dismiss();
+            }
+        });
+
+        builder.setNegativeButton("取消",null);
+
+        builder.show();
+    }
 
 }
