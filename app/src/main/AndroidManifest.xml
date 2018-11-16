@@ -18,7 +18,8 @@
     <uses-permission android:name="android.permission.ACCESS_MOCK_LOCATION"/>
     <uses-permission android:name="android.permission.VIBRATE"/>
     <uses-permission android:name="android.permission.PROCESS_OUTGOING_CALLS"/>
-    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />。
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>
+    。
     <application
             android:allowBackup="true"
             android:icon="@mipmap/ic_launcher"
@@ -127,11 +128,17 @@
         <service android:name=".activity.service.AddressService">
         </service>
 
-       <!-- <receiver
+        <!--
+        <receiver
                 android:name=".activity.receiver.OutCallReceiver"
                 android:enabled="true"
                 android:exported="true">
-        </receiver>-->
+        </receiver>
+        -->
+        <activity
+                android:name=".activity.DragViewActivity"
+                android:label="@string/title_activity_drag_view">
+        </activity>
     </application>
 
 </manifest>

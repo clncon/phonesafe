@@ -1,0 +1,40 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                tools:context="itcast.com.itcastsafe.activity.DragViewActivity">
+
+    <TextView
+            android:id="@+id/tv_top"
+            android:text="按住提示框拖到任意位置\n按手机返回键立即生效"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:gravity="center"
+            android:textSize="20sp"
+            android:background="@mipmap/call_locate_blue"
+    />
+
+    <TextView
+            android:id="@+id/tv_bottom"
+            android:text="按住提示框拖到任意位置\n按手机返回键立即生效"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:gravity="center"
+            android:visibility="invisible"
+            android:textSize="20sp"
+            android:background="@mipmap/call_locate_blue"
+    />
+
+    <ImageView
+            android:id="@+id/iv_drag"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="90dp"
+            android:src="@mipmap/drag"
+    />
+
+</RelativeLayout>

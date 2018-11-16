@@ -36,4 +36,10 @@
             android:onClick="updateStyle"
     />
 
+    <itcast.com.itcastsafe.activity.view.SettingItemClick
+            android:id="@+id/sv_address_location"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+    />
+
 </LinearLayout>

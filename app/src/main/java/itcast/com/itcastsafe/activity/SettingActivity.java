@@ -23,6 +23,8 @@ public class SettingActivity extends Activity {
     private SettingItemClick svAddressStyle;
     private SettingItemClick sv_address_style;
     final String[] items = new String[]{"半透明","活力橙","卫视蓝","金属灰","苹果绿"};
+    private SettingItemClick sv_address_loaction;
+
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,6 +35,7 @@ public class SettingActivity extends Activity {
         sv_update();
         sv_address();
         initAddressStyle();
+        initAddressLocation();
 
 
     }
@@ -93,13 +96,29 @@ public class SettingActivity extends Activity {
      */
     public void initAddressStyle(){
 
-        sv_address_style = svAddressStyle = findViewById(R.id.sv_address_style);
+        sv_address_style = findViewById(R.id.sv_address_style);
 
         sv_address_style.setTv_title("修改提示框归属地风格");
         int adressStyle = sharedPreferences.getInt("AdressStyle", 0);
 
         sv_address_style.setTv_desc(items[adressStyle]);
     }
+
+    /**
+     * 初始化归属地位置View
+     */
+    public void initAddressLocation(){
+        sv_address_loaction = findViewById(R.id.sv_address_location);
+        sv_address_loaction.setTv_title("归属地提示框显示位置");
+        sv_address_loaction.setTv_desc("设置归属地提示框的显示位置");
+        sv_address_loaction.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(SettingActivity.this,DragViewActivity.class));
+            }
+        });
+    }
+
 
 
     /**
