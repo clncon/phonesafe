@@ -2,6 +2,7 @@
                 xmlns:tools="http://schemas.android.com/tools"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:background="#5000"
                 tools:context="itcast.com.itcastsafe.activity.DragViewActivity">
 
     <TextView
@@ -35,6 +36,8 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="90dp"
             android:src="@mipmap/drag"
+            android:clickable="true"
+            android:onClick="click"
     />
 
 </RelativeLayout>
