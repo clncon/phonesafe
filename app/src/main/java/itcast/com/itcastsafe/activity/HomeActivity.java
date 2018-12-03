@@ -60,6 +60,10 @@ public class HomeActivity extends Activity {
                           showInputPasswordDialog();
                        }
                        break;
+                   case 1:
+                       //通讯卫士
+                        startActivity(new Intent(HomeActivity.this,CallSafeActivity.class));
+                        break;
                };
 
            }

@@ -136,9 +136,11 @@
         </receiver>
         -->
         <activity
-                android:theme="@android:style/Theme.Translucent.NoTitleBar"
                 android:name=".activity.DragViewActivity"
-                android:label="@string/title_activity_drag_view">
+                android:label="@string/title_activity_drag_view"
+                android:theme="@android:style/Theme.Translucent.NoTitleBar">
+        </activity>
+        <activity android:name=".activity.CallSafeActivity">
         </activity>
     </application>
 
