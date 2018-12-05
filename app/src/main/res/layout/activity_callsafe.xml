@@ -8,10 +8,38 @@
       <TextView style="@style/TitleStyle"
        android:text="黑名单管理"
       />
+    <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="wrap_content" android:layout_height="wrap_content"/>
 
-     <include
-             android:id="@+id/list_black_view"
-             layout="@layout/list_black_view"></include>
+      <FrameLayout
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+          <LinearLayout
+                  android:id="@+id/ll_loading"
+                  android:layout_width="match_parent"
+                  android:layout_height="match_parent"
+                  android:orientation="vertical"
+                  android:gravity="center"
+                  android:visibility="invisible"
+          >
+             <ProgressBar
+                     android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"/>
+
+              <TextView
+                      android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"
+                      android:text="玩命加载中"
+
+              />
+
+          </LinearLayout>
+          <include
+                  android:id="@+id/list_black_view"
+                  layout="@layout/list_black_view"></include>
+      </FrameLayout>
+
 
 
 </LinearLayout>

@@ -4,6 +4,7 @@ import android.content.ContentValues
 import android.content.Context
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
+import android.os.SystemClock
 import itcast.com.itcastsafe.activity.bean.BlackNumberInfo
 import java.util.*
 
@@ -71,7 +72,7 @@ class BlackNumberDao {
     fun findNumber(number: String): String {
         var mode: String = "";
         var db: SQLiteDatabase = helper.writableDatabase;
-        var cursor: Cursor = db.query("blacknumber", arrayOf(mode),
+        var cursor: Cursor = db.query("blacknumber", arrayOf("mode"),
                 "number=?", arrayOf(number), null, null, null);
         if (cursor.moveToNext()) mode = cursor.getString(0);
         cursor.close();
@@ -92,7 +93,9 @@ class BlackNumberDao {
             blackNumberInfo.number=cursor.getString(0);
             blackNumberInfos.add(blackNumberInfo);
         }
-        
+        cursor.close()
+         db.close()
+         SystemClock.sleep(3000)
          return blackNumberInfos
     }
     
