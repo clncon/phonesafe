@@ -15,10 +15,14 @@ import itcast.com.itcastsafe.R
 import itcast.com.itcastsafe.activity.adapter.MyBaseAdapter
 import itcast.com.itcastsafe.activity.bean.BlackNumberInfo
 import itcast.com.itcastsafe.activity.dao.BlackNumberDao
+import itcast.com.itcastsafe.activity.utils.ToastUtil
 import kotlinx.android.synthetic.main.activity_callsafe.*
 
 class CallSafeActivity : AppCompatActivity() {
-    var  list_view: ListView?=null;
+    var  list_view: ListView?=null
+    var currentPageNumber:Int =0
+    val pageSize = 10
+    var totalPage =0
     var blackNumberInfos:List<BlackNumberInfo>?=null;
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,7 +36,9 @@ class CallSafeActivity : AppCompatActivity() {
         override fun handleMessage(msg: Message?) {
             super.handleMessage(msg)
             ll_loading.visibility=View.INVISIBLE;
+            tv_page_number.text="${currentPageNumber+1}/${totalPage}"
             list_view?.adapter=CallSafeAdapter(blackNumberInfos,this@CallSafeActivity);
+
         }
     }
     private fun initData(){
@@ -41,7 +47,8 @@ class CallSafeActivity : AppCompatActivity() {
           kotlin.run {
 
               var dao = BlackNumberDao(this@CallSafeActivity);
-              blackNumberInfos= dao.findAll();
+              totalPage = dao.findTotalSize()/pageSize
+              blackNumberInfos= dao.findPar(currentPageNumber,pageSize)
               handler.sendEmptyMessage(0)
 
           }
@@ -95,9 +102,53 @@ class CallSafeActivity : AppCompatActivity() {
 
     }
 
+    fun prePage(view:View){
+        if(currentPageNumber<=0) {
+            ToastUtil.showToast(this@CallSafeActivity,"已经是第一页了")
+            return;
+        }
+        currentPageNumber--;
+        initData()
+
+
+    }
+
+    fun nextPage(view:View){
+        if(currentPageNumber>=totalPage-1){
+            ToastUtil.showToast(this@CallSafeActivity,"已经是最后一页了")
+            return
+        }
+        currentPageNumber++
+        initData()
+    }
+
+    fun jumpPage(view:View){
+       if(et_page_number.text.isBlank()){
+           ToastUtil.showToast(this@CallSafeActivity,"页数必须输入")
+           return
+       }
+       val number = et_page_number.text.toString().toInt()
+        if(number<1||number>totalPage){
+            ToastUtil.showToast(this@CallSafeActivity,"页数必须在合理范围之内")
+            return
+        }
+        currentPageNumber=number-1
+        initData()
+    }
+
     class ViewHolder(var viewItem:View){
          var tv_number: TextView = viewItem.findViewById(R.id.tv_number)
          var tv_mode: TextView = viewItem.findViewById(R.id.tv_mode)
 
     }
+
+    /**
+     * 获取总记录数
+     */
+    fun getTotalSize():Int{
+        var dao = BlackNumberDao(this@CallSafeActivity)
+        return dao.findTotalSize();
+    }
+
+
 }

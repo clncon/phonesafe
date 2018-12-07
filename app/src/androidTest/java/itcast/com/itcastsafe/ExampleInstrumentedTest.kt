@@ -43,7 +43,7 @@ class ExampleInstrumentedTest {
     @Test
     fun testFind(){
         val dao:BlackNumberDao = BlackNumberDao(InstrumentationRegistry.getTargetContext())
-        val number = dao.findNumber("13300000000")
+        val number = dao.findPar(0,10)
 
 
    /* fun testDelete() {
