@@ -10,12 +10,12 @@ import itcast.com.itcastsafe.activity.bean.BlackNumberInfo
  *@Date:Created in 23:37 2018/12/5
  *@Modified By:
  */
-abstract class  MyBaseAdapter<T>(var list: List<T>, var ctx: Context): BaseAdapter(){
+abstract class  MyBaseAdapter<T>(var list: MutableList<T>, var ctx: Context): BaseAdapter(){
 
 
 
     override fun getItem(position: Int): T {
-        return list!!.get(position)
+        return list.get(position)
     }
 
     override fun getItemId(position: Int): Long {
@@ -23,7 +23,7 @@ abstract class  MyBaseAdapter<T>(var list: List<T>, var ctx: Context): BaseAdapt
     }
 
     override fun getCount(): Int {
-        return list!!.size
+        return list.size
     }
 
 }

@@ -25,10 +25,10 @@
     />
 
     <ImageView
-            android:id="@+id/tv_delete"
+            android:id="@+id/iv_delete"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_alignParentRight="true"
-            android:background="@mipmap/ic_delete_btn"
+            android:background="@drawable/delte_selector_button"
     />
 </RelativeLayout>

@@ -4,22 +4,10 @@
               android:layout_width="match_parent"
               android:layout_height="match_parent">
 
-  <RelativeLayout
-          android:layout_width="match_parent"
-          android:layout_height="wrap_content">
+
       <TextView style="@style/TitleStyle"
        android:text="黑名单管理"
       />
-     <Button
-             android:layout_width="wrap_content"
-             android:layout_height="wrap_content"
-             android:layout_alignParentRight="true"
-             android:background="@color/colorPrimary"
-             android:onClick="addBlackNumber"
-             android:text="添加"
-
-     />
-  </RelativeLayout>
     <TextView
             android:id="@+id/tv_title"
             android:layout_width="wrap_content" android:layout_height="wrap_content"/>
@@ -27,6 +15,7 @@
       <FrameLayout
               android:layout_width="match_parent"
               android:layout_height="match_parent"
+              android:layout_weight="11"
       >
           <LinearLayout
                   android:id="@+id/ll_loading"
@@ -52,4 +41,47 @@
                   android:id="@+id/list_black_view"
                   layout="@layout/list_black_view"></include>
       </FrameLayout>
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+    >
+        <Button
+                android:onClick="prePage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="上一页"
+        />
+        <Button
+                android:onClick="nextPage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="下一页"
+        />
+        <Button
+                android:onClick="jumpPage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="跳转"
+        />
+        <EditText
+                android:id="@+id/et_page_number"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+        />
+        <TextView
+                android:id="@+id/tv_page_number"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="0/10"
+
+        />
+
+    </LinearLayout>
+
 </LinearLayout>

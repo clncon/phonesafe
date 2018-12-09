@@ -116,7 +116,7 @@ class BlackNumberDao {
      * @param pageNumber 当前页面
      * @param pageSize 每页显示的记录数
      */
-    fun findPar(pageNumber:Int,pageSize:Int):List<BlackNumberInfo>{
+    fun findPar(pageNumber:Int,pageSize:Int):MutableList<BlackNumberInfo>{
               val db = helper.writableDatabase
               val cursor = db.rawQuery("select number,mode from blacknumber limit ? offset ?", arrayOf(pageSize.toString(),(pageNumber*pageSize).toString()))
               val blackNumberInfos = arrayListOf<BlackNumberInfo>()
@@ -131,4 +131,22 @@ class BlackNumberDao {
     }
 
 
+    /**
+     * 分批加载数据
+     */
+     fun findPar2(startIndx:Int,maxCount:Int):MutableList<BlackNumberInfo>{
+
+         val db = helper.writableDatabase
+         val cursor = db.rawQuery("select number,mode from blacknumber limit ? offset ?", arrayOf(maxCount.toString(),(startIndx).toString()))
+         val blackNumberInfos = arrayListOf<BlackNumberInfo>()
+         while(cursor.moveToNext()){
+             var blackNumberInfo = BlackNumberInfo()
+             blackNumberInfo.number=cursor.getString(0)
+             blackNumberInfo.mode=cursor.getString(1)
+             blackNumberInfos.add(blackNumberInfo)
+         }
+
+         return blackNumberInfos
+
+     }
 }
