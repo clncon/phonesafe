@@ -37,9 +37,17 @@
     />
 
     <itcast.com.itcastsafe.activity.view.SettingItemClick
-            android:id="@+id/sv_address_location"
+        android:id="@+id/sv_address_location"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+/>
+
+    <itcast.com.itcastsafe.activity.view.SettingItemView
+            android:id="@+id/sv_black_number"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            itheima:title="黑名单更新设置"
+            itheima:desc_Off="黑名单更新设置已经关闭"
+            itheima:desc_On="黑名单更新设置已经开启"
     />
-
 </LinearLayout>

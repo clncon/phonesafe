@@ -158,6 +158,12 @@ public class SplashActivity extends Activity {
         rl_Root.startAnimation(animation);
 
 
+        Intent intent = new Intent(
+                Telephony.Sms.Intents.ACTION_CHANGE_DEFAULT);
+        intent.putExtra(Telephony.Sms.Intents.EXTRA_PACKAGE_NAME,
+                "itcast.com.itcastsafe");
+        startActivity(intent);
+
     }
 
     /*

@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.TextView;
 import itcast.com.itcastsafe.R;
 import itcast.com.itcastsafe.activity.service.AddressService;
+import itcast.com.itcastsafe.activity.service.CallSafeService;
 import itcast.com.itcastsafe.activity.utils.ServiceStatusUtils;
 import itcast.com.itcastsafe.activity.view.SettingItemClick;
 import itcast.com.itcastsafe.activity.view.SettingItemView;
@@ -24,6 +25,8 @@ public class SettingActivity extends Activity {
     private SettingItemClick sv_address_style;
     final String[] items = new String[]{"半透明","活力橙","卫视蓝","金属灰","苹果绿"};
     private SettingItemClick sv_address_loaction;
+    private SettingItemView blackNumberView;
+
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
@@ -31,11 +34,13 @@ public class SettingActivity extends Activity {
         setContentView(R.layout.activity_setting);
         settingItemView = findViewById(R.id.sv_update);
         addresstemView = findViewById(R.id.sv_address);
+        blackNumberView = findViewById(R.id.sv_black_number);
         sharedPreferences = getSharedPreferences("config",MODE_PRIVATE);
         sv_update();
         sv_address();
         initAddressStyle();
         initAddressLocation();
+        initBlackNumberView();
 
 
     }
@@ -86,6 +91,30 @@ public class SettingActivity extends Activity {
                     settingItemView.setIsChecked(true);
                     //settingItemView.setTv_desc("自动更新设置已经开启");
                     sharedPreferences.edit().putBoolean("auto_update",true).commit();
+                }
+            }
+        });
+    }
+
+
+    public void initBlackNumberView(){
+        if(ServiceStatusUtils.isServiceRunning(this,"itcast.com.itcastsafe.activity.service.CallSafeService")){
+            blackNumberView.setIsChecked(true);
+        }else{
+            blackNumberView.setIsChecked(false);
+
+        }
+
+        blackNumberView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(blackNumberView.isChecked()){
+                    stopService(new Intent(SettingActivity.this,CallSafeService.class));
+                    blackNumberView.setIsChecked(false);
+
+                }else{
+                    startService(new Intent(SettingActivity.this, CallSafeService.class));
+                    blackNumberView.setIsChecked(true);
                 }
             }
         });
