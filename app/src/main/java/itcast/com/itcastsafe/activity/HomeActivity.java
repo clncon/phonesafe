@@ -48,6 +48,10 @@ public class HomeActivity extends Activity {
                        startActivity(new Intent(HomeActivity.this,SettingActivity.class));
                        break;
                        //高级工具
+                   case 2:
+                       //软件管理
+                       startActivity(new Intent(HomeActivity.this,AppManagerActivity.class));
+                       break;
                    case 7:
                        startActivity(new Intent(HomeActivity.this,AToolsActivity.class));
                        break;
