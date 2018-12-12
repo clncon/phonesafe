@@ -18,4 +18,5 @@
     <string name="title_activity_atools">AToolsActivity</string>
     <string name="title_activity_address_">AddressActivity</string>
     <string name="title_activity_drag_view">DragViewActivity</string>
+    <string name="title_activity_app_manager">AppManagerActivity</string>
 </resources>
