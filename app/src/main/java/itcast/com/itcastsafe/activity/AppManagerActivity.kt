@@ -3,13 +3,14 @@ package itcast.com.itcastsafe.activity
 import android.app.Activity
 import android.content.res.ColorStateList
 import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.*
 import android.text.format.Formatter
-import android.view.Menu
-import android.view.MenuItem
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
+import android.view.animation.Animation
+import android.view.animation.ScaleAnimation
 import android.widget.*
+import com.safframework.log.L
 import itcast.com.itcastsafe.R
 import itcast.com.itcastsafe.activity.adapter.MyBaseAdapter
 import itcast.com.itcastsafe.activity.bean.AppInfo
@@ -22,6 +23,7 @@ class AppManagerActivity : Activity() {
     private var adapter:AppManagerAdapter?=null ;
     private val userAppInfos:MutableList<AppInfo> = arrayListOf()
     private val systemAppInfos:MutableList<AppInfo> = arrayListOf()
+    private var popupWindow:PopupWindow?=null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_app_manager)
@@ -50,6 +52,7 @@ class AppManagerActivity : Activity() {
              * @param totalItemCount 总共多少条目
              */
             override fun onScroll(view: AbsListView?, firstVisibleItem: Int, visibleItemCount: Int, totalItemCount: Int) {
+                popupWindowDissmiss()
                  if(userAppInfos!=null && systemAppInfos!=null){
                      if(firstVisibleItem>=(userAppInfos.size+1)){
                          //系统应用程序
@@ -70,11 +73,43 @@ class AppManagerActivity : Activity() {
         })
 
         list_view.setOnItemClickListener { adapterView: AdapterView<*>, view1: View, i: Int, l: Long ->
+             //获取当前点击的对象
+            val item = list_view.getItemAtPosition(i)
+            if(item!=null&&item is AppInfo){
+                val contentView = View.inflate(this@AppManagerActivity,R.layout.item_popup,null)
+                popupWindowDissmiss()
+                 //-2标识包裹内容
+                 popupWindow= PopupWindow(contentView,-2,-2)
+                   //使用popupWindow必须设置背景，不然没有动画
+                  popupWindow!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+                  var location = IntArray(2)
+                  //获取view展示到窗体的位置
+                  view1.getLocationInWindow(location)
+
+                 L.d("----${location[1]}----")
+                  popupWindow!!.showAtLocation(adapterView,Gravity.LEFT + Gravity.TOP,70,location[1])
+
+
+                  val scaleAnimation = ScaleAnimation(0.5f, 1.0f, 0.5f, 1.0f,
+                          Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f)
+
+                  scaleAnimation.duration=300
+                  contentView.startAnimation(scaleAnimation)
+
+            }
 
 
         }
 
 
+    }
+
+    private fun popupWindowDissmiss() {
+        if(popupWindow!=null&& popupWindow!!.isShowing){
+            popupWindow!!.dismiss()
+            popupWindow=null
+
+        }
     }
 
     val handler = object : Handler(Looper.getMainLooper()){
@@ -181,5 +216,10 @@ class AppManagerActivity : Activity() {
         }.start()
     }
 
+
+    override fun onDestroy() {
+        popupWindowDissmiss()
+        super.onDestroy()
+    }
 
 }
