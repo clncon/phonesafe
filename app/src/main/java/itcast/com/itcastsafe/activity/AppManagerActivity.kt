@@ -1,16 +1,15 @@
 package itcast.com.itcastsafe.activity
 
 import android.app.Activity
+import android.content.res.ColorStateList
+import android.graphics.Color
 import android.os.*
 import android.text.format.Formatter
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
-import android.widget.BaseAdapter
-import android.widget.ImageView
-import android.widget.ListView
-import android.widget.TextView
+import android.widget.*
 import itcast.com.itcastsafe.R
 import itcast.com.itcastsafe.activity.adapter.MyBaseAdapter
 import itcast.com.itcastsafe.activity.bean.AppInfo
@@ -21,6 +20,8 @@ class AppManagerActivity : Activity() {
 
     private  var appInfos:List<AppInfo>?=null
     private var adapter:AppManagerAdapter?=null ;
+    private val userAppInfos:MutableList<AppInfo> = arrayListOf()
+    private val systemAppInfos:MutableList<AppInfo> = arrayListOf()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_app_manager)
@@ -40,12 +41,47 @@ class AppManagerActivity : Activity() {
         tv_sd.text= "sd卡可用：${Formatter.formatFileSize(this,sd_freeSpace)}"
 
 
+          val list_view:ListView = findViewById(R.id.lisv_view)
+        list_view.setOnScrollListener(object:AbsListView.OnScrollListener{
+            /**
+             * @param view
+             * @param firstVisibleItem 第一个可见的条位置
+             * @param visibleItemCount 一页可以展示多少个条目
+             * @param totalItemCount 总共多少条目
+             */
+            override fun onScroll(view: AbsListView?, firstVisibleItem: Int, visibleItemCount: Int, totalItemCount: Int) {
+                 if(userAppInfos!=null && systemAppInfos!=null){
+                     if(firstVisibleItem>=(userAppInfos.size+1)){
+                         //系统应用程序
+                          tv_app.text="系统程序（${systemAppInfos.size}）个"
+
+                     }else{
+                         //用户应用程序
+                         tv_app.text="用户程序（${userAppInfos.size}）个"
+                     }
+                 }
+            }
+
+
+            override fun onScrollStateChanged(view: AbsListView?, scrollState: Int) {
+                return
+            }
+
+        })
+
+        list_view.setOnItemClickListener { adapterView: AdapterView<*>, view1: View, i: Int, l: Long ->
+
+
+        }
+
+
     }
 
     val handler = object : Handler(Looper.getMainLooper()){
         override fun handleMessage(msg: Message?) {
+            val listView:ListView = findViewById(R.id.lisv_view)
             super.handleMessage(msg)
-            var listView = lisv_view as ListView
+
             if(listView.adapter==null){
                 adapter = AppManagerAdapter()
                 listView.adapter=adapter
@@ -66,21 +102,43 @@ class AppManagerActivity : Activity() {
 
     inner class AppManagerAdapter : BaseAdapter() {
         override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
-           var view:View?=null
-            var viewHolder:ViewHolder?=null
-            if(convertView==null){
-                view = View.inflate(this@AppManagerActivity,R.layout.item_app_manager,null)
-                viewHolder= ViewHolder(view)
-                view.tag=viewHolder
-            }else{
-                view=convertView
-                viewHolder= view.tag as ViewHolder
+            //如果当前position==0标识应用程序
+            if(position==0){
+                 var textView = TextView(this@AppManagerActivity)
+                  textView.text="用戶程序（${userAppInfos.size}）"
+                  textView.setTextColor(Color.WHITE)
+                  textView.setBackgroundColor(Color.GRAY)
+                return textView
+
+            }else if(position==userAppInfos.size+1){
+                var textView = TextView(this@AppManagerActivity)
+                textView.text="系統程序（${systemAppInfos.size}）"
+                textView.setTextColor(Color.WHITE)
+                textView.setBackgroundColor(Color.GRAY)
+                return textView
 
 
             }
+            var info:AppInfo?=null
+            if(position<userAppInfos.size+1){
+                //把多出來的特殊條目剪掉
+                info = userAppInfos.get(position-1)
+            }else {
+                 info=systemAppInfos.get(position-(userAppInfos.size+2))
 
-            val info:AppInfo = getItem(position) as AppInfo
-            viewHolder.iv_icon.background=info.icon
+            }
+           var view:View?=null
+            var viewHolder:ViewHolder?=null
+            if(convertView!=null&&convertView is LinearLayout){
+                view=convertView
+                viewHolder= view.tag as ViewHolder
+            }else {
+                view = View.inflate(this@AppManagerActivity,R.layout.item_app_manager,null)
+                viewHolder= ViewHolder(view)
+                view.tag=viewHolder
+            }
+
+            viewHolder.iv_icon.background=info!!.icon
             viewHolder.tv_name.text=info.apkPackageName
             viewHolder.tv_size.text=Formatter.formatFileSize(this@AppManagerActivity, info.apkSize!!)
             if(info.isRom!!){
@@ -103,7 +161,7 @@ class AppManagerActivity : Activity() {
         }
 
         override fun getCount(): Int {
-           return appInfos!!.size
+           return userAppInfos.size+systemAppInfos.size+2
         }
 
     }
@@ -115,6 +173,8 @@ class AppManagerActivity : Activity() {
            kotlin.run {
                //get all app that is installed
                 appInfos = AppInfos.getAppInfos(this@AppManagerActivity)
+                userAppInfos.addAll(appInfos!!.groupBy { it.userApp }.getValue(true));
+                systemAppInfos.addAll(appInfos!!.groupBy { it.userApp }.getValue(false));
                handler.sendEmptyMessage(0)
 
            }
