@@ -23,13 +23,15 @@ object AppInfos {
                  val icon = info.loadIcon(context.packageManager)
                  val apkName = info.loadLabel(context.packageManager)
                  val apkSize = File(info.sourceDir).length()
+
                  print("---------------------------------------------------------")
                  print("icon:${icon}")
                  print("apkName:${apkName}")
                  print("apkSize:${apkSize}")
 
                  appInfo.icon=icon
-                 appInfo.apkPackageName=apkName.toString()
+                 appInfo.apkName=apkName.toString()
+                 appInfo.apkPackageName=info.packageName
                  appInfo.apkSize=apkSize
                  //获取到安装应用程序的标记
                  val flags = info.flags

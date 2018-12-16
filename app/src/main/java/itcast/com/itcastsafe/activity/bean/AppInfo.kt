@@ -18,4 +18,5 @@ class AppInfo {
     var userApp:Boolean?=null
     var apkPackageName:String?=null
     var isRom:Boolean?=null
+    var apkName:String?=null
 }

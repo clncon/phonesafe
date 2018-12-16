@@ -7,6 +7,7 @@
 >
 
     <LinearLayout
+            android:id="@+id/ll_uninstall"
             android:orientation="vertical"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -28,6 +29,7 @@
 
     </LinearLayout>
     <LinearLayout
+            android:id="@+id/ll_start"
             android:orientation="vertical"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -42,6 +44,7 @@
         />
 
         <TextView
+                android:id="@+id/tv_start"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="运行"
@@ -49,6 +52,7 @@
 
     </LinearLayout>
     <LinearLayout
+            android:id="@+id/ll_share"
             android:orientation="vertical"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -66,6 +70,28 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="分享"
+        />
+
+    </LinearLayout>
+    <LinearLayout
+            android:id="@+id/ll_detail"
+            android:orientation="vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+    >
+
+        <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@mipmap/img3"
+        />
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="详细"
         />
 
     </LinearLayout>

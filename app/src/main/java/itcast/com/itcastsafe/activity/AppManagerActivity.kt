@@ -12,23 +12,60 @@ import android.view.animation.ScaleAnimation
 import android.widget.*
 import com.safframework.log.L
 import itcast.com.itcastsafe.R
-import itcast.com.itcastsafe.activity.adapter.MyBaseAdapter
 import itcast.com.itcastsafe.activity.bean.AppInfo
 import itcast.com.itcastsafe.activity.engine.AppInfos
 import kotlinx.android.synthetic.main.activity_app_manager.*
+import kotlinx.android.synthetic.main.item_popup.view.*
+import android.content.Intent
+import android.net.Uri
 
-class AppManagerActivity : Activity() {
 
+class AppManagerActivity : Activity(), View.OnClickListener {
     private  var appInfos:List<AppInfo>?=null
     private var adapter:AppManagerAdapter?=null ;
     private val userAppInfos:MutableList<AppInfo> = arrayListOf()
     private val systemAppInfos:MutableList<AppInfo> = arrayListOf()
     private var popupWindow:PopupWindow?=null
+    private var clickAppInfo:AppInfo?=null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_app_manager)
         initUI()
         initData()
+    }
+
+    override fun onClick(v: View?) {
+        when(v!!.id){
+            //运行
+            R.id.ll_start ->{
+                L.d("${clickAppInfo!!.apkPackageName}")
+                val start_localIntent = this.packageManager.getLaunchIntentForPackage(clickAppInfo!!.apkPackageName)
+                this.startActivity(start_localIntent)
+                popupWindowDissmiss()
+            }
+            R.id.ll_share->{
+                val share_localIntent = Intent("android.intent.action.SEND")
+                share_localIntent.type = "text/plain"
+                share_localIntent.putExtra("android.intent.extra.SUBJECT", "f分享")
+                share_localIntent.putExtra("android.intent.extra.TEXT",
+                        "Hi！推荐您使用软件：" + clickAppInfo!!.apkPackageName + "下载地址:" + "https://play.google.com/store/apps/details?id=" + clickAppInfo!!.apkPackageName)
+                this.startActivity(Intent.createChooser(share_localIntent, "分享"))
+                popupWindowDissmiss()
+            }
+            R.id.ll_uninstall ->{
+                val uninstall_localIntent = Intent("android.intent.action.DELETE", Uri.parse("package:" + clickAppInfo!!.apkPackageName))
+                startActivity(uninstall_localIntent)
+                popupWindowDissmiss()
+            }
+            R.id.ll_detail ->{
+                val detail_intent = Intent()
+                detail_intent.action = "android.settings.APPLICATION_DETAILS_SETTINGS"
+                detail_intent.addCategory(Intent.CATEGORY_DEFAULT)
+                detail_intent.data = Uri.parse("package:" + clickAppInfo!!.apkPackageName)
+                startActivity(detail_intent)
+                popupWindowDissmiss()
+            }
+        }
     }
 
     private fun initUI() {
@@ -75,8 +112,15 @@ class AppManagerActivity : Activity() {
         list_view.setOnItemClickListener { adapterView: AdapterView<*>, view1: View, i: Int, l: Long ->
              //获取当前点击的对象
             val item = list_view.getItemAtPosition(i)
+
             if(item!=null&&item is AppInfo){
+                clickAppInfo = item
+                L.d("item of apkName:${clickAppInfo!!.apkPackageName}")
                 val contentView = View.inflate(this@AppManagerActivity,R.layout.item_popup,null)
+                contentView.ll_share.setOnClickListener(this@AppManagerActivity)
+                contentView.ll_start.setOnClickListener(this@AppManagerActivity)
+                contentView.ll_uninstall.setOnClickListener(this@AppManagerActivity)
+                contentView.ll_detail.setOnClickListener(this@AppManagerActivity)
                 popupWindowDissmiss()
                  //-2标识包裹内容
                  popupWindow= PopupWindow(contentView,-2,-2)
@@ -85,7 +129,6 @@ class AppManagerActivity : Activity() {
                   var location = IntArray(2)
                   //获取view展示到窗体的位置
                   view1.getLocationInWindow(location)
-
                  L.d("----${location[1]}----")
                   popupWindow!!.showAtLocation(adapterView,Gravity.LEFT + Gravity.TOP,70,location[1])
 
@@ -104,7 +147,7 @@ class AppManagerActivity : Activity() {
 
     }
 
-    private fun popupWindowDissmiss() {
+     fun popupWindowDissmiss() {
         if(popupWindow!=null&& popupWindow!!.isShowing){
             popupWindow!!.dismiss()
             popupWindow=null
@@ -174,7 +217,7 @@ class AppManagerActivity : Activity() {
             }
 
             viewHolder.iv_icon.background=info!!.icon
-            viewHolder.tv_name.text=info.apkPackageName
+            viewHolder.tv_name.text=info.apkName
             viewHolder.tv_size.text=Formatter.formatFileSize(this@AppManagerActivity, info.apkSize!!)
             if(info.isRom!!){
                 viewHolder.tv_type.text="手机内存"
@@ -187,8 +230,21 @@ class AppManagerActivity : Activity() {
             return view!!
         }
 
-        override fun getItem(position: Int): Any {
-            return appInfos!!.get(position)
+        override fun getItem(position: Int): Any? {
+            if(position==0){
+                return null
+            }else if(position==userAppInfos.size+1){
+                return null
+            }
+            var appInfo:AppInfo?=null
+
+            if(position<userAppInfos.size+1){
+                //把多出来的特殊条目减去
+                appInfo = userAppInfos.get(position-1)
+            }else {
+                appInfo = systemAppInfos.get(position-userAppInfos.size-2)
+            }
+            return appInfo
         }
 
         override fun getItemId(position: Int): Long {
