@@ -3,10 +3,13 @@ package itcast.com.itcastsafe.activity;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Looper;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import itcast.com.itcastsafe.R;
+import itcast.com.itcastsafe.activity.utils.SmsUtils;
+import itcast.com.itcastsafe.activity.utils.ToastUtil;
 
 public class AToolsActivity extends Activity {
 
@@ -37,5 +40,28 @@ public class AToolsActivity extends Activity {
 
     public void numberAddressQuery(View v){
         startActivity(new Intent(AToolsActivity.this,AddressActivity.class));
+    }
+
+    public void backupsms(View v){
+
+        new Thread(){
+            @Override
+            public void run() {
+                super.run();
+                boolean flag =SmsUtils.INSTANCE.backup(AToolsActivity.this);
+                if(flag){
+                    Looper.prepare();
+                    ToastUtil.showToast(AToolsActivity.this,"短信备份成功");
+                    Looper.loop();
+                }else{
+                    Looper.prepare();
+                    ToastUtil.showToast(AToolsActivity.this,"短信备份成功");
+                    Looper.loop();
+
+                }
+            }
+        }.start();
+
+
     }
 }

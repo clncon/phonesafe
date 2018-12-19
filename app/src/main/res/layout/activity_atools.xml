@@ -25,4 +25,18 @@
             android:drawablePadding="5dp"
     />
 
+    <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/button"
+            android:text="短信备份"
+            android:textSize="20sp"
+            android:textColor="#000"
+            android:gravity="center_vertical"
+            android:drawableLeft="@android:drawable/ic_menu_camera"
+            android:padding="10dp"
+            android:onClick="backupsms"
+            android:clickable="true"
+            android:drawablePadding="5dp"
+    />
 </LinearLayout>
