@@ -1,9 +1,12 @@
 package itcast.com.itcastsafe.activity.utils
 
+import android.app.ProgressDialog
 import android.content.Context
 import android.net.Uri
 import android.os.Environment
+import android.os.SystemClock
 import android.util.Xml
+import android.widget.ProgressBar
 import com.safframework.log.L
 import org.xmlpull.v1.XmlSerializer
 import java.io.File
@@ -18,7 +21,17 @@ import java.lang.Exception
  */
 object SmsUtils {
 
-    fun backup(context: Context):Boolean{
+    /**
+     * 备份短信的接口
+     */
+    interface BackUpSms{
+        fun before(count:Int)
+        fun onBackUpSms(progress:Int)
+
+
+    }
+
+    fun backup(context: Context, callBack:BackUpSms):Boolean{
 
          var flag=true;
         try {
@@ -33,13 +46,18 @@ object SmsUtils {
                 //standalone标识当前的xml是否是独立的
                 serializer.startDocument("utf-8",true)
                 serializer.startTag(null,"smss")
+
                 //2.如果有SD卡
                 val uri= Uri.parse("content://sms/")
                 val cursor =context.contentResolver.query(uri, arrayOf("address","date","type","body"),null,null,null)
 
-                 L.i(cursor.count.toString())
+                 val count = cursor.count
+                serializer.attribute(null,"size",count.toString())
+                /*  progressDialog.max=count
+                  progressBar.max=count*/
+                callBack.before(count)
+                var process=0
                 while(cursor.moveToNext()){
-                    L.i("look me :"+cursor.getString(0))
                     serializer.startTag(null,"sms")
                     serializer.startTag(null,"address")
                     serializer.text(cursor.getString(0))
@@ -54,6 +72,11 @@ object SmsUtils {
                     serializer.text(cursor.getString(3))
                     serializer.endTag(null,"body")
                     serializer.endTag(null,"sms")
+                    process++
+                  /*  progressDialog.progress=process
+                    progressBar.progress=process*/
+                    callBack.onBackUpSms(process)
+                    SystemClock.sleep(200)
                 }
                 serializer.endTag(null,"smss")
                 serializer.endDocument()
