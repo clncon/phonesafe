@@ -69,11 +69,11 @@ object SmsUtils {
                     serializer.text(cursor.getString(2))
                     serializer.endTag(null,"type")
                     serializer.startTag(null,"body")
-                    serializer.text(cursor.getString(3))
+                    serializer.text(Crypto.encrypt("123",cursor.getString(3)))
                     serializer.endTag(null,"body")
                     serializer.endTag(null,"sms")
                     process++
-                  /*  progressDialog.progress=process
+                  /*  progre下ssDialog.progress=process
                     progressBar.progress=process*/
                     callBack.onBackUpSms(process)
                     SystemClock.sleep(200)
