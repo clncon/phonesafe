@@ -38,4 +38,19 @@
 
     </LinearLayout>
 
+
+    <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+        <include android:id="@+id/list_view" layout="@layout/list_black_view"></include>
+
+      <!--  <TextView
+                android:id="@+id/tv_app"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#FF888888"
+                android:text="用户程序（6）个"
+        />-->
+    </FrameLayout>
+
 </LinearLayout>
