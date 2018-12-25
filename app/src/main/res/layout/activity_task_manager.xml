@@ -41,7 +41,7 @@
 
     <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent" android:layout_weight="111">
         <include android:id="@+id/list_view" layout="@layout/list_black_view"></include>
 
       <!--  <TextView
@@ -52,5 +52,43 @@
                 android:text="用户程序（6）个"
         />-->
     </FrameLayout>
+    <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+        <Button
+                android:id="@+id/bt_select_all"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="全选"
+                android:background="@drawable/btn_green_selector"
+        />
+        <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="反选"
+                android:onClick="selectOppsite"
+                android:background="@drawable/btn_green_selector"
+        />
+        <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="一键清理"
+                android:onClick="killProcess"
+                android:background="@drawable/btn_green_selector"
+        />
+        <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="设置"
+                android:background="@drawable/btn_green_selector"
+        />
+
+    </LinearLayout>
 
 </LinearLayout>

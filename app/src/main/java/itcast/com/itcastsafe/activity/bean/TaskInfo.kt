@@ -19,4 +19,9 @@ class TaskInfo {
      */
     var  isUserApp:Boolean=false
 
+    /**
+     * 判断当前的item的条目是否被勾选上
+     */
+    var checked:Boolean=false
+
 }
