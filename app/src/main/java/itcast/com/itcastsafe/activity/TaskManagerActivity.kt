@@ -3,6 +3,8 @@ package itcast.com.itcastsafe.activity
 import android.app.Activity
 import android.app.ActivityManager
 import android.content.Context
+import android.content.Intent
+import android.content.SharedPreferences
 import android.graphics.Color
 import android.os.Bundle
 import android.text.format.Formatter
@@ -26,15 +28,22 @@ class TaskManagerActivity : Activity() {
    lateinit var taskInfos:List<TaskInfo>
     lateinit var systemInfos:MutableList<TaskInfo>
     lateinit var userInfos:MutableList<TaskInfo>
-    lateinit var adapter:TaskInfoAdapter
+    var adapter:TaskInfoAdapter?=null
      var avaiMem:Long=0
      var totalMem:Long=0
+    lateinit var config:SharedPreferences
 
 
-
+    override fun onResume() {
+        super.onResume()
+        if(adapter!=null){
+            adapter!!.notifyDataSetChanged()
+        }
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_task_manager)
+        config=getSharedPreferences("config",Context.MODE_PRIVATE)
         initUI();
         initData();
         bt_select_all.setOnClickListener{v ->
@@ -48,7 +57,7 @@ class TaskManagerActivity : Activity() {
                 taskInfo.checked=true
             }
 
-            adapter.notifyDataSetChanged()
+            adapter!!.notifyDataSetChanged()
 
         }
     }
@@ -99,7 +108,7 @@ class TaskManagerActivity : Activity() {
                             adapter = TaskInfoAdapter()
                             listView.adapter=adapter
                         }else{
-                            adapter.notifyDataSetChanged()
+                            adapter!!.notifyDataSetChanged()
                         }
 
                     }
@@ -120,7 +129,17 @@ class TaskManagerActivity : Activity() {
         for(taskInfo in systemInfos){
             taskInfo.checked=!taskInfo.checked
         }
-        adapter.notifyDataSetChanged()
+        adapter!!.notifyDataSetChanged()
+    }
+
+    /**
+     * 打开设置
+     */
+    fun openSetting(v:View){
+
+        var intent = Intent()
+        intent.setClass(this@TaskManagerActivity,TaskManagerSettingActivity().javaClass)
+        startActivity(intent)
     }
 
     /**
@@ -168,7 +187,7 @@ class TaskManagerActivity : Activity() {
         tv_process_memory.text="剩余/总共：${Formatter.formatFileSize(this@TaskManagerActivity,avaiMem)}/${Formatter.formatFileSize(this@TaskManagerActivity,totalMem)}"
         UIUtils.showToast(this@TaskManagerActivity,"共清理了${totalCount},释放了${Formatter.formatFileSize(this@TaskManagerActivity,releaseMem)}")
         //刷新界面
-        adapter.notifyDataSetChanged()
+        adapter!!.notifyDataSetChanged()
 
     }
    inner class TaskInfoAdapter: BaseAdapter() {
@@ -241,7 +260,13 @@ class TaskManagerActivity : Activity() {
         }
 
         override fun getCount(): Int {
-            return userInfos.size+systemInfos.size+2
+            val flag = config.getBoolean("is_show_system",false);
+            if(flag){
+                return userInfos.size+1+systemInfos.size+1
+            }else{
+
+                return userInfos.size+1
+            }
         }
 
     }
@@ -255,6 +280,7 @@ class TaskManagerActivity : Activity() {
         val tv_app_merory_size: TextView = viewItem.findViewById(R.id.tv_app_merory_size)
         val cb_app_status: CheckBox = viewItem.findViewById(R.id.cb_app_status)
     }
+
 
 
 
