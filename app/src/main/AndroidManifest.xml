@@ -179,6 +179,11 @@
                 android:label="@string/title_activity_task_manager_setting">
         </activity>
 
+        <service
+                android:name=".activity.service.KillProcessService"
+                android:enabled="true"
+                android:exported="true">
+        </service>
     </application>
 
 </manifest>

@@ -11,6 +11,8 @@ import android.widget.CompoundButton
 import android.widget.EditText
 import com.safframework.log.L
 import itcast.com.itcastsafe.R
+import itcast.com.itcastsafe.activity.service.KillProcessService
+import itcast.com.itcastsafe.activity.utils.SystemInfoUtils
 import kotlinx.android.synthetic.main.activity_task_manager_setting.*
 
 class TaskManagerSettingActivity : Activity() {
@@ -42,6 +44,27 @@ class TaskManagerSettingActivity : Activity() {
                  sharedPreferences.edit().putBoolean("is_show_system",false).commit()
              }
          }
+
+
+        val intent = Intent()
+        intent.setClass(this@TaskManagerSettingActivity,KillProcessService().javaClass)
+        cb_status_kill.setOnCheckedChangeListener{ compoundButton: CompoundButton, flag: Boolean ->
+
+
+            if(flag){
+                startService(intent)
+            }else{
+                stopService(intent)
+            }
+        }
+
+    }
+
+    override fun onStart() {
+        super.onStart()
+        cb_status_kill.isChecked = SystemInfoUtils.isServiceRunnint(this@TaskManagerSettingActivity,
+                "itcast.com.itcastsafe.activity.service.KillProcessService")
+
 
     }
 }

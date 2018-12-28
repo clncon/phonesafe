@@ -80,8 +80,10 @@ class TaskManagerActivity : Activity() {
 
             if (obj != null && obj is TaskInfo) {
                 var taskInfo: TaskInfo = obj as TaskInfo
+                if(taskInfo.packageName.equals(packageName))return@setOnItemClickListener
                 taskInfo.checked = !taskInfo.checked
                viewHolder.cb_app_status.isChecked=taskInfo.checked
+
 
             }
 
@@ -234,6 +236,9 @@ class TaskManagerActivity : Activity() {
             viewHolder.cb_app_status.isChecked=info.checked
 
 
+            if(info.packageName.equals(packageName)){
+                 viewHolder.cb_app_status.visibility=View.INVISIBLE
+            }
             return view
 
         }
